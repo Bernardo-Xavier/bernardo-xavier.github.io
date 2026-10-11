@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+
+// Each data reel: topic and official source, as listed in the bx-motor-instagram README.
+const reels = [
+  ['Where Brazil’s exports go, 1997–2025', 'UN Comtrade (Secex data), checked against Comex Stat'],
+  ['Senators elected per party, 1994–2026', 'TSE open data'],
+  ['State-run high school scores (IDEB), 2005–2025', 'INEP; map IBGE'],
+  ['Homicide rates by state, 2000–2024', 'Atlas da Violência (IPEA/FBSP) via IPEADATA'],
+  ['Abstention, blank and null votes for president, 2018–2026', 'TSE open data'],
+  ['Where Brazil’s federal money goes, 2015–2025', 'National Treasury; IBGE (IPCA)'],
+  ['Who gains and loses people inside Canada, 2002–2026', 'Statistics Canada 17-10-0008-01 and 17-10-0009-01'],
+];
+---
+<Base title="Projects" description="Animated public-data stories built with reproducible Python pipelines.">
+  <section class="post-head wrap">
+    <p class="kicker">Projects</p>
+    <h1>Public data, <span class="accent">animated</span></h1>
+    <p>Each video is a Python pipeline: download, tidy and check, then render.</p>
+  </section>
+  <div class="wrap">
+    <div class="projects">
+      <div class="project">
+        <h3>Data reel engine</h3>
+        <p>
+          Every video has three steps: <code>coletar.py</code> downloads the official data,
+          <code>compor.py</code> builds a tidy table and asserts its totals, and <code>render.py</code> draws
+          a 1080×1920 animation with matplotlib and ffmpeg. Colours, fonts and logo come from one brand kit.
+        </p>
+      </div>
+      <div class="project">
+        <h3>Carousel and blog generator</h3>
+        <p>
+          Turns a short JSON file into Instagram cards with headless Chrome. It stops when text overflows a card,
+          and it keeps a file that ties every claim to a quoted source line.
+        </p>
+      </div>
+    </div>
+    <h2>Data reels</h2>
+    <div class="prose">
+      <table>
+        <thead><tr><th>Topic</th><th>Source</th></tr></thead>
+        <tbody>{reels.map(([t, s]) => <tr><td>{t}</td><td>{s}</td></tr>)}</tbody>
+      </table>
+      <p>Watch them on <a href={SITE.links.instagram}>Instagram</a>.</p>
+    </div>
+  </div>
+</Base>

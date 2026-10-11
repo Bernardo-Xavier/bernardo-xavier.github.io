@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props { posts: CollectionEntry<'blog'>[] }
+const { posts } = Astro.props;
+const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+---
+<ul class="posts">
+  {posts.map((p) => (
+    <li>
+      <a class="card" href={`/blog/${p.id}/`}>
+        {p.data.cover ? <Image src={p.data.cover} alt="" width={288} /> : <span />}
+        <div>
+          <time class="meta" datetime={p.data.date.toISOString()}>{fmt(p.data.date)}</time>
+          <h3>{p.data.title}</h3>
+          <p>{p.data.description}</p>
+        </div>
+      </a>
+    </li>
+  ))}
+</ul>

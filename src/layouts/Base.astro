@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import { SITE } from '../site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const { title, description = SITE.tagline, image } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${SITE.role}`;
+const LABELS: Record<string, string> = { github: 'GitHub', instagram: 'Instagram', linkedin: 'LinkedIn' };
+const path = Astro.url.pathname;
+const current = (href: string) => (href === '/' ? path === '/' : path.startsWith(href)) ? 'page' : undefined;
+const canonical = new URL(path, Astro.site);
+const ogImage = image ? new URL(image, Astro.site) : new URL('/avatar.png', Astro.site);
+---
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} · Blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={title ?? SITE.name} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content={title ? 'article' : 'website'} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap wide">
+        <a class="brand" href="/"><img src="/avatar.png" alt="" width="40" height="40" /><span class="brand-name">{SITE.name}</span></a>
+        <nav class="nav" aria-label="Main">
+          <a href="/blog/" aria-current={current('/blog/')}>Blog</a>
+          <a href="/projects/" aria-current={current('/projects/')}>Projects</a>
+          <a href="/about/" aria-current={current('/about/')}>About</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="foot">
+      <div class="wrap wide">
+        <span class="meta">© {new Date().getFullYear()} {SITE.name} · {SITE.place}</span>
+        <span class="nav">
+          {Object.entries(SITE.links).map(([name, href]) => (
+            <a href={href} rel="me">{LABELS[name] ?? name}</a>
+          ))}
+          <a href="/rss.xml">RSS</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

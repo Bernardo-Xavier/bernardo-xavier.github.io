@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+---
+<Base title="About" description={`${SITE.name}: ${SITE.role} in ${SITE.place}, originally from Brazil.`}>
+  <section class="post-head wrap">
+    <p class="kicker">About</p>
+    <h1>I use code to <span class="accent">explain data</span></h1>
+  </section>
+  <div class="prose wrap">
+    <p>
+      I am a full-stack software engineer and data analyst in the Toronto area, originally from Brazil.
+      I build data pipelines that download public data, check it against an independent source and turn it into
+      short animated stories.
+    </p>
+    <p>
+      On this site, I write about AI news and AI tips for people who want to use these tools at work.
+      Every post cites its sources, and every number comes from an official dataset or the company's own documentation.
+    </p>
+    <h2>How I work</h2>
+    <ul>
+      <li><strong>Rigour:</strong> official sources, numbers checked against a second source, caveats stated.</li>
+      <li><strong>Engineering:</strong> reproducible pipelines with automated checks.</li>
+      <li><strong>Clarity:</strong> one idea per post, in plain English.</li>
+    </ul>
+    <h2>Contact</h2>
+    <p>
+      Find me on <a href={SITE.links.github}>GitHub</a> and <a href={SITE.links.instagram}>Instagram</a>.
+    </p>
+  </div>
+</Base>
